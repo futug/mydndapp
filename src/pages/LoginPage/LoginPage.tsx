@@ -15,7 +15,7 @@ const LoginPage = () => {
             <div className={`${styles.loginPage} page-style`}>
                 <MainLogo />
                 <MainForm>
-                    <Input inputType="email" inputName="email" inputRequired={true} inputPlaceholder="Enter email" iconComponent={<GiVikingHelmet />} />
+                    <Input inputType="text" inputName="email" inputRequired={true} inputPlaceholder="Enter email" iconComponent={<GiVikingHelmet />} />
                     <Input
                         inputType={passwordType}
                         inputName="password"

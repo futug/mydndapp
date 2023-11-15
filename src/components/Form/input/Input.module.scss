@@ -17,7 +17,7 @@
 
     &:focus ~ .input__IconWrapper,
     &:valid ~ .input__IconWrapper {
-        animation: shake 0.5s;
+        animation: shake 0.5s 3;
     }
 
     &__IconWrapper {
