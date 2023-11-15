@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./MainLogo.module.scss";
 import mainLogoPng from "../../assets/main_logo.png";
 import mainLogoWebp from "../../assets/main_logo.webp";
