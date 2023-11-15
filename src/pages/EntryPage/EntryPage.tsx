@@ -1,7 +1,4 @@
-import React from "react";
 import styles from "./EntryPage.module.scss";
-import mainLogoPng from "../../assets/main_logo.png";
-import mainLogoWebp from "../../assets/main_logo.webp";
 import MainButton from "../../components/MainRouteLink/MainRouteLink";
 import Container from "../../components/Container/Container";
 import MainLogo from "../../components/MainLogo/MainLogo";

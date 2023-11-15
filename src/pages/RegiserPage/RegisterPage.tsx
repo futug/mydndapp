@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styles from "./RegisterPage.module.scss";
 import Container from "../../components/Container/Container";
 import MainLogo from "../../components/MainLogo/MainLogo";

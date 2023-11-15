@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Container from "../../components/Container/Container";
 import styles from "./LoginPage.module.scss";

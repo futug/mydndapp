@@ -1,5 +1,3 @@
-import React from "react";
-
 import Router from "./utilities/Router/Router";
 
 function App() {
