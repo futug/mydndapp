@@ -1,0 +1,15 @@
+.formButton {
+    background-color: var(--primary-accent);
+    color: var(--text-light);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    letter-spacing: 0.2rem;
+
+    &:hover {
+        filter: brightness(1.2);
+    }
+}

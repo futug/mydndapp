@@ -1,0 +1,12 @@
+.loginPage {
+    &__formButton {
+        margin-top: 0.7rem;
+    }
+
+    &__restoreLink {
+        margin-top: 0.7rem;
+        font-size: 0.8rem;
+        color: var(--text-dark);
+        opacity: 0.8;
+    }
+}
