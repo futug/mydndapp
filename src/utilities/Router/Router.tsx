@@ -13,7 +13,7 @@ const Router = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/success" element={<SuccesActivation />} />
-                <Route path="*" element={<NotFoundPage />} />
+                <Route path="/*" element={<NotFoundPage />} />
             </Routes>
         </RouterProvider>
     );
