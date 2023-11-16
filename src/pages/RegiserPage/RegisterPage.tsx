@@ -37,13 +37,7 @@ const RegisterPage = () => {
                                 : "What's your name?"
                         }
                         iconComponent={<GiTiedScroll />}
-                        className={
-                            (username.isDirty && username.isEmpty) || (username.isDirty && username.minLength)
-                                ? services.invalid
-                                : "" || (username.isDirty && username.isValid)
-                                ? services.valid
-                                : ""
-                        }
+                        className={(username.isDirty && username.isEmpty) || (username.isDirty && username.minLength) ? services.invalid : ""}
                     />
                     <Input
                         value={email.value}
@@ -61,13 +55,7 @@ const RegisterPage = () => {
                                 : "Enter your email"
                         }
                         iconComponent={<GiVikingHelmet />}
-                        className={
-                            (email.isDirty && email.isEmpty) || (email.isDirty && email.isEmail)
-                                ? services.invalid
-                                : "" || (email.isDirty && email.isValid)
-                                ? services.valid
-                                : ""
-                        }
+                        className={(email.isDirty && email.isEmpty) || (email.isDirty && email.isEmail) ? services.invalid : ""}
                     />
                     <Input
                         value={password.value}
@@ -86,13 +74,7 @@ const RegisterPage = () => {
                         onBlur={() => password.onBlur()}
                         onClick={togglePassword}
                         cursor="pointer"
-                        className={
-                            (password.isDirty && password.isEmpty) || (password.isDirty && password.minLength)
-                                ? services.invalid
-                                : "" || (password.isDirty && password.isValid)
-                                ? services.valid
-                                : ""
-                        }
+                        className={(password.isDirty && password.isEmpty) || (password.isDirty && password.minLength) ? services.invalid : ""}
                     />
                     <FormButton
                         disabled={!username.isValid || !email.isValid || !password.isValid}
