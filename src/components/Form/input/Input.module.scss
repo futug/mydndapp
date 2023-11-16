@@ -28,6 +28,11 @@
         color: var(--text-dark);
         opacity: 0.8;
         cursor: pointer;
+        overflow: hidden;
+
+        & * {
+            transition: all 0.3s ease-in-out;
+        }
     }
 
     @keyframes shake {

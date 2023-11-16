@@ -373,6 +373,7 @@ template {
     --text-light: #f3f2f5;
     --text-dark: #2a2a2a;
     --text-accent: #7c1911;
+    --valid-color: #018478;
 }
 
 .page-style {
@@ -382,10 +383,11 @@ template {
     justify-content: center;
     height: 100vh;
 }
-input:autofill {
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
     background-color: transparent !important;
-}
-
-input:-webkit-autofill {
-    background-color: transparent !important;
+    color: #000 !important;
 }

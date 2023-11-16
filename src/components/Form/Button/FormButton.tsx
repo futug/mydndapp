@@ -5,10 +5,13 @@ type FormButtonProps = {
     children: React.ReactNode;
     className?: string;
     buttonType: "button" | "submit" | "reset";
+    disabled?: boolean;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
-const FormButton = ({ buttonType, className, ...props }: FormButtonProps) => {
+
+const FormButton = ({ buttonType, className, disabled, onClick, ...props }: FormButtonProps) => {
     return (
-        <button className={`${styles.formButton} ${className}`} type={buttonType}>
+        <button onClick={onClick} disabled={disabled} className={`${styles.formButton} ${className}`} type={buttonType}>
             {props.children}
         </button>
     );

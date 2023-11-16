@@ -1,26 +1,31 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import Container from "../../components/Container/Container";
 import styles from "./LoginPage.module.scss";
+import services from "../../ServiceClasses.module.scss";
 import Input from "../../components/Form/input/Input";
 import FormButton from "../../components/Form/Button/FormButton";
 import MainLogo from "../../components/MainLogo/MainLogo";
 import { GiVikingHelmet, GiEnergyShield } from "react-icons/gi";
 import MainForm from "../../components/Form/MainForm/MainForm";
 import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
+import useInput from "../../utilities/hooks/useInput/useInput";
 
 const LoginPage = () => {
     const { passwordType, togglePassword } = usePasswordToggle();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const email = useInput("", { isEmail: true, isEmpty: true, minLength: 6 });
+    const password = useInput("", { isEmpty: true, minLength: 6 });
 
-    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value);
-    };
+    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        const data = {
+            email: email.value,
+            password: password.value,
+        };
 
-    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(event.target.value);
+        email.onChange({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+        password.onChange({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+        console.log(data);
     };
 
     return (
@@ -29,25 +34,48 @@ const LoginPage = () => {
                 <MainLogo />
                 <MainForm>
                     <Input
-                        value={email}
-                        onChange={handleEmailChange}
+                        value={email.value}
+                        onChange={(e) => email.onChange(e)}
+                        onBlur={() => email.onBlur()}
                         inputType="text"
                         inputName="email"
                         inputRequired={true}
-                        inputPlaceholder="Enter email"
+                        inputPlaceholder={
+                            email.isDirty && email.isEmpty
+                                ? email.errorMessages.isEmpty
+                                : email.isDirty && email.isEmail
+                                ? email.errorMessages.isEmail
+                                : "Enter your email"
+                        }
                         iconComponent={<GiVikingHelmet />}
+                        className={(email.isDirty && email.isEmpty) || (email.isDirty && email.isEmail) ? services.invalid : ""}
+                        cursor="pointer"
                     />
                     <Input
-                        value={password}
-                        onChange={handlePasswordChange}
+                        value={password.value}
+                        onChange={(e) => password.onChange(e)}
+                        onBlur={() => password.onBlur()}
                         inputType={passwordType}
                         inputName="password"
                         inputRequired={true}
-                        inputPlaceholder="Enter password"
+                        inputPlaceholder={
+                            password.isDirty && password.isEmpty
+                                ? password.errorMessages.isEmpty
+                                : password.isDirty && password.minLength
+                                ? password.errorMessages.minLength
+                                : "Enter your password"
+                        }
                         iconComponent={<GiEnergyShield />}
                         onClick={togglePassword}
+                        className={(password.isDirty && password.isEmpty) || (password.isDirty && password.minLength) ? services.invalid : ""}
+                        cursor="pointer"
                     />
-                    <FormButton buttonType="submit" className={styles.loginPage__formButton}>
+                    <FormButton
+                        onClick={handleSubmit}
+                        disabled={!email.isValid || !password.isValid}
+                        buttonType="submit"
+                        className={styles.loginPage__formButton}
+                    >
                         Login
                     </FormButton>
                 </MainForm>

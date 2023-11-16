@@ -1,4 +1,5 @@
 import styles from "./RegisterPage.module.scss";
+import services from "../../ServiceClasses.module.scss";
 import Container from "../../components/Container/Container";
 import MainLogo from "../../components/MainLogo/MainLogo";
 import MainForm from "../../components/Form/MainForm/MainForm";
@@ -6,49 +7,98 @@ import Input from "../../components/Form/input/Input";
 import FormButton from "../../components/Form/Button/FormButton";
 import { GiVikingHelmet, GiEnergyShield, GiTiedScroll } from "react-icons/gi";
 import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
+import useInput from "../../utilities/hooks/useInput/useInput";
 
 const RegisterPage = () => {
+    const email = useInput("", { isEmail: true, isEmpty: true, minLength: 6 });
+    const username = useInput("", { isEmpty: true, minLength: 3 });
+    const password = useInput("", { isEmpty: true, minLength: 6, passwordTooEasy: true });
+
     const { passwordType, togglePassword } = usePasswordToggle();
+
     return (
         <Container>
             <div className={`${styles.registerPage} page-style`}>
                 <MainLogo />
                 <MainForm>
                     <Input
+                        value={username.value}
+                        onChange={(e) => username.onChange(e)}
+                        onBlur={() => username.onBlur()}
                         cursor="pointer"
                         inputType="text"
                         inputName="username"
                         inputRequired={true}
-                        inputPlaceholder="What's your name?"
+                        inputPlaceholder={
+                            username.isDirty && username.isEmpty
+                                ? username.errorMessages.isEmpty
+                                : username.isDirty && username.minLength
+                                ? username.errorMessages.minLength
+                                : "What's your name?"
+                        }
                         iconComponent={<GiTiedScroll />}
+                        className={
+                            (username.isDirty && username.isEmpty) || (username.isDirty && username.minLength)
+                                ? services.invalid
+                                : "" || (username.isDirty && username.isValid)
+                                ? services.valid
+                                : ""
+                        }
                     />
                     <Input
+                        value={email.value}
+                        onChange={(e) => email.onChange(e)}
+                        onBlur={() => email.onBlur()}
                         cursor="pointer"
                         inputType="text"
                         inputName="email"
                         inputRequired={true}
-                        inputPlaceholder="Enter email"
+                        inputPlaceholder={
+                            email.isDirty && email.isEmpty
+                                ? email.errorMessages.isEmpty
+                                : email.isDirty && email.isEmail
+                                ? email.errorMessages.isEmail
+                                : "Enter your email"
+                        }
                         iconComponent={<GiVikingHelmet />}
+                        className={
+                            (email.isDirty && email.isEmpty) || (email.isDirty && email.isEmail)
+                                ? services.invalid
+                                : "" || (email.isDirty && email.isValid)
+                                ? services.valid
+                                : ""
+                        }
                     />
                     <Input
+                        value={password.value}
                         inputType={passwordType}
                         inputName="password"
                         inputRequired={true}
-                        inputPlaceholder="Enter password"
+                        inputPlaceholder={
+                            password.isDirty && password.isEmpty
+                                ? password.errorMessages.isEmpty
+                                : password.isDirty && password.minLength
+                                ? password.errorMessages.minLength
+                                : "Enter your password"
+                        }
                         iconComponent={<GiEnergyShield />}
+                        onChange={(e) => password.onChange(e)}
+                        onBlur={() => password.onBlur()}
                         onClick={togglePassword}
                         cursor="pointer"
+                        className={
+                            (password.isDirty && password.isEmpty) || (password.isDirty && password.minLength)
+                                ? services.invalid
+                                : "" || (password.isDirty && password.isValid)
+                                ? services.valid
+                                : ""
+                        }
                     />
-                    <Input
-                        inputType={passwordType}
-                        inputName="password"
-                        inputRequired={true}
-                        inputPlaceholder="Repeat password"
-                        iconComponent={<GiEnergyShield />}
-                        onClick={togglePassword}
-                        cursor="pointer"
-                    />
-                    <FormButton buttonType="submit" className={styles.registerPage__formButton}>
+                    <FormButton
+                        disabled={!username.isValid || !email.isValid || !password.isValid}
+                        buttonType="submit"
+                        className={styles.registerPage__formButton}
+                    >
                         Register
                     </FormButton>
                 </MainForm>
