@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import styles from "./RegisterPage.module.scss";
 import services from "../../ServiceClasses.module.scss";
 import Container from "../../components/Container/Container";
@@ -8,19 +9,55 @@ import FormButton from "../../components/Form/Button/FormButton";
 import { GiVikingHelmet, GiEnergyShield, GiTiedScroll } from "react-icons/gi";
 import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
 import useInput from "../../utilities/hooks/useInput/useInput";
+import Popup from "../../components/Popup/Popup";
 
 const RegisterPage = () => {
     const email = useInput("", { isEmail: true, isEmpty: true, minLength: 6 });
     const username = useInput("", { isEmpty: true, minLength: 3 });
     const password = useInput("", { isEmpty: true, minLength: 6, passwordTooEasy: true });
+    const [succsessRegister, setSuccsessRegister] = useState(false);
+    const [userEmail, setUserEmail] = useState("");
+    const [occurredError, setOccurredError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const { passwordType, togglePassword } = usePasswordToggle();
 
+    const onSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        try {
+            const response = await fetch("http://185.225.34.140:8000/api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email.value,
+                    username: username.value,
+                    password: password.value,
+                }),
+            });
+
+            setSuccsessRegister(true);
+            const data = await response.json();
+
+            if (!response.ok) {
+                setOccurredError(`Error ${response.status}: ${data.message}`);
+
+                return;
+            }
+
+            setUserEmail(data.user.email);
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    };
+
     return (
         <Container>
+            <Popup occurredError={occurredError} userEmail={userEmail} success={succsessRegister} setSuccess={setSuccsessRegister} />
             <div className={`${styles.registerPage} page-style`}>
                 <MainLogo />
-                <MainForm>
+                <MainForm onSubmit={onSubmit}>
                     <Input
                         value={username.value}
                         onChange={(e) => username.onChange(e)}

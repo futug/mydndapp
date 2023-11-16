@@ -10,7 +10,7 @@ const EntryPage = () => {
                 <MainLogo />
                 <MainButton link="/login">Sign In</MainButton>
                 <p className={styles.entryPage__text}>or</p>
-                <MainButton link="/register">Sign Un</MainButton>
+                <MainButton link="/register">Sign Up</MainButton>
             </div>
         </Container>
     );

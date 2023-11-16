@@ -5,10 +5,11 @@ interface MainFormProps {
     children: React.ReactNode;
     className?: string;
     valid?: boolean;
+    onSubmit?: (event: React.FormEvent) => void;
 }
 const MainForm = (props: MainFormProps) => {
     return (
-        <form datatype-valid={props.valid} className={`${styles.mainForm} ${props.className}`}>
+        <form onSubmit={props.onSubmit} datatype-valid={props.valid} className={`${styles.mainForm} ${props.className}`}>
             {props.children}
         </form>
     );

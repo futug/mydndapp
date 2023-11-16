@@ -1,0 +1,63 @@
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+
+    &__isActive {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    &__inner {
+        padding: 0 1rem;
+        height: 50vh;
+        background-color: #fff;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+
+        & h2 {
+            color: var(--text-accent);
+        }
+
+        & p {
+            margin-top: 1rem;
+            max-width: 280px;
+        }
+
+        &IsActive {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media only screen and (min-width: 600px) {
+        &__inner {
+            height: 20vh;
+            padding: 2rem;
+
+            & p {
+                max-width: 100%;
+            }
+        }
+    }
+
+    &__close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        cursor: pointer;
+    }
+}
