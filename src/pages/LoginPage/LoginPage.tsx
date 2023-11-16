@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Container from "../../components/Container/Container";
 import styles from "./LoginPage.module.scss";
@@ -10,13 +11,35 @@ import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwor
 
 const LoginPage = () => {
     const { passwordType, togglePassword } = usePasswordToggle();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
+    };
+
+    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value);
+    };
+
     return (
         <Container>
             <div className={`${styles.loginPage} page-style`}>
                 <MainLogo />
                 <MainForm>
-                    <Input inputType="text" inputName="email" inputRequired={true} inputPlaceholder="Enter email" iconComponent={<GiVikingHelmet />} />
                     <Input
+                        value={email}
+                        onChange={handleEmailChange}
+                        inputType="text"
+                        inputName="email"
+                        inputRequired={true}
+                        inputPlaceholder="Enter email"
+                        iconComponent={<GiVikingHelmet />}
+                    />
+                    <Input
+                        value={password}
+                        onChange={handlePasswordChange}
                         inputType={passwordType}
                         inputName="password"
                         inputRequired={true}

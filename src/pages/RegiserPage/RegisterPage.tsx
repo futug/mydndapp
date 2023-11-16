@@ -24,7 +24,7 @@ const RegisterPage = () => {
                     />
                     <Input
                         cursor="pointer"
-                        inputType="email"
+                        inputType="text"
                         inputName="email"
                         inputRequired={true}
                         inputPlaceholder="Enter email"

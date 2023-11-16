@@ -9,12 +9,22 @@ interface InputProps {
     inputRequired: boolean;
     iconComponent?: React.ReactNode;
     onClick?: () => void;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     cursor?: string;
+    value?: string;
 }
-const Input = ({ inputType, inputName, inputPlaceholder, inputRequired, iconComponent, onClick, cursor }: InputProps) => {
+const Input = ({ inputType, inputName, inputPlaceholder, inputRequired, iconComponent, onClick, onChange, cursor, value }: InputProps) => {
     return (
         <Label>
-            <input style={{ cursor: cursor }} type={inputType} name={inputName} required={inputRequired} className={styles.input} />
+            <input
+                onChange={onChange}
+                value={value}
+                style={{ cursor: cursor }}
+                type={inputType}
+                name={inputName}
+                required={inputRequired}
+                className={styles.input}
+            />
             <span className={styles.inputPlaceholder}>{inputPlaceholder}</span>
             {iconComponent && (
                 <div className={styles.input__IconWrapper} onClick={onClick}>

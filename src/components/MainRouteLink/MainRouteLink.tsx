@@ -5,10 +5,11 @@ import styles from "./MainRouteLink.module.scss";
 interface MainLinkProps {
     link: string;
     children: React.ReactNode;
+    className?: string;
 }
 const MainButton = (props: MainLinkProps) => {
     return (
-        <Link to={props.link} className={styles.mainLink}>
+        <Link to={props.link} className={`${styles.mainLink} ${props.className}`}>
             {props.children}
         </Link>
     );
