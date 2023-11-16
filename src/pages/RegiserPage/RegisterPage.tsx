@@ -18,7 +18,6 @@ const RegisterPage = () => {
     const [succsessRegister, setSuccsessRegister] = useState(false);
     const [userEmail, setUserEmail] = useState("");
     const [occurredError, setOccurredError] = useState("");
-    const [loading, setLoading] = useState(false);
 
     const { passwordType, togglePassword } = usePasswordToggle();
 
