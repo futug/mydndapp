@@ -4,7 +4,7 @@ export type Rules = {
     passwordTooEasy?: boolean;
     isEmail?: boolean;
     isEmpty?: boolean;
-    minLength?: number;
+    minLength: number;
     passwordUnSimilar?: boolean;
     passwordSimilar?: boolean;
 };
