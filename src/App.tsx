@@ -5,6 +5,7 @@ import ThemeToggler from "./components/ThemeToggler/ThemeToggler";
 
 function App() {
     const { theme, setTheme } = useTheme();
+
     return (
         <div className="wrapper">
             <ThemeToggler theme={theme} setTheme={setTheme} />

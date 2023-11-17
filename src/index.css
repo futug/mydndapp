@@ -405,3 +405,9 @@ input:-webkit-autofill:active {
     background-color: transparent !important;
     color: var(--text-dark);
 }
+
+.prev-btn {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+}
