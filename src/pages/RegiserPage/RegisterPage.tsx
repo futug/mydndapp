@@ -1,17 +1,21 @@
+//Libs components
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./RegisterPage.module.scss";
-import services from "../../ServiceClasses.module.scss";
+import { GiVikingHelmet, GiEnergyShield, GiTiedScroll } from "react-icons/gi";
+//My components
 import Container from "../../components/Container/Container";
 import MainLogo from "../../components/MainLogo/MainLogo";
 import MainForm from "../../components/Form/MainForm/MainForm";
 import Input from "../../components/Form/input/Input";
 import FormButton from "../../components/Form/Button/FormButton";
-import { GiVikingHelmet, GiEnergyShield, GiTiedScroll } from "react-icons/gi";
-import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
-import useInput from "../../utilities/hooks/useInput/useInput";
 import Popup from "../../components/Popup/Popup";
 import Loader from "../../components/Loader/Loader";
+//Styles
+import styles from "./RegisterPage.module.scss";
+import services from "../../ServiceClasses.module.scss";
+//Utilities & Custom hooks
+import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
+import useInput from "../../utilities/hooks/useInput/useInput";
 
 const RegisterPage = () => {
     const email = useInput("", { isEmail: true, isEmpty: true, minLength: 6 });

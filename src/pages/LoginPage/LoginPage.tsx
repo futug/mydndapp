@@ -1,16 +1,20 @@
+//Libs components
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Container from "../../components/Container/Container";
-import styles from "./LoginPage.module.scss";
-import services from "../../ServiceClasses.module.scss";
+import { GiTiedScroll, GiEnergyShield } from "react-icons/gi";
+//My components
+import MainForm from "../../components/Form/MainForm/MainForm";
 import Input from "../../components/Form/input/Input";
 import FormButton from "../../components/Form/Button/FormButton";
 import MainLogo from "../../components/MainLogo/MainLogo";
-import { GiTiedScroll, GiEnergyShield } from "react-icons/gi";
-import MainForm from "../../components/Form/MainForm/MainForm";
+import Container from "../../components/Container/Container";
+import Loader from "../../components/Loader/Loader";
+//Styles
+import styles from "./LoginPage.module.scss";
+import services from "../../ServiceClasses.module.scss";
+//Utilities & Custom hooks
 import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
 import useInput from "../../utilities/hooks/useInput/useInput";
-import Loader from "../../components/Loader/Loader";
 
 const LoginPage = () => {
     const navigation = useNavigate();

@@ -1,5 +1,7 @@
+//My components
 import Container from "../../components/Container/Container";
 import MainRouteLink from "../../components/MainRouteLink/MainRouteLink";
+//Styles
 import styles from "./SuccesActivation.module.scss";
 
 const SuccesActivation = () => {
