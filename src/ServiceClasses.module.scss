@@ -36,3 +36,10 @@
         color: var(--valid-color) !important;
     }
 }
+
+.loginError {
+    max-width: 280px;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--primary-accent);
+}

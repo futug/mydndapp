@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./RegisterPage.module.scss";
 import services from "../../ServiceClasses.module.scss";
 import Container from "../../components/Container/Container";
@@ -20,6 +21,7 @@ const RegisterPage = () => {
     const [userEmail, setUserEmail] = useState("");
     const [occurredError, setOccurredError] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigation = useNavigate();
 
     const { passwordType, togglePassword } = usePasswordToggle();
 
@@ -40,6 +42,11 @@ const RegisterPage = () => {
             });
 
             setSuccsessRegister(true);
+            if (response.ok) {
+                setTimeout(() => {
+                    navigation("/Login");
+                }, 1200);
+            }
             const data = await response.json();
 
             if (!response.ok) {
@@ -59,7 +66,15 @@ const RegisterPage = () => {
     return (
         <Container>
             {loading && <Loader />}
-            <Popup occurredError={occurredError} userEmail={userEmail} success={succsessRegister} setSuccess={setSuccsessRegister} />
+            <Popup
+                problem="Something went wrong"
+                successEntry="Almost there"
+                occurredError={occurredError}
+                userEmail={userEmail}
+                success={succsessRegister}
+                setSuccess={setSuccsessRegister}
+                succesMessage={`Right now, an email with an activation link should have come to your email ${userEmail}, check it out!`}
+            />
             <div className={`${styles.registerPage} page-style`}>
                 <MainLogo />
                 <MainForm>

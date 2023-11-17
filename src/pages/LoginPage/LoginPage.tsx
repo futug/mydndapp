@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../../components/Container/Container";
 import styles from "./LoginPage.module.scss";
 import services from "../../ServiceClasses.module.scss";
@@ -9,29 +10,49 @@ import { GiVikingHelmet, GiEnergyShield } from "react-icons/gi";
 import MainForm from "../../components/Form/MainForm/MainForm";
 import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
 import useInput from "../../utilities/hooks/useInput/useInput";
+import Loader from "../../components/Loader/Loader";
 
 const LoginPage = () => {
+    const navigation = useNavigate();
     const { passwordType, togglePassword } = usePasswordToggle();
+    const [loading, setLoading] = useState(false);
 
+    const [error, setError] = useState("");
     const email = useInput("", { isEmail: true, isEmpty: true, minLength: 6 });
     const password = useInput("", { isEmpty: true, minLength: 6 });
 
-    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        const data = {
-            email: email.value,
-            password: password.value,
-        };
-
-        email.onChange({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
-        password.onChange({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
-        console.log(data);
+        try {
+            setLoading(true);
+            const response = await fetch("https://dndapi.ru:8000/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email.value,
+                    password: password.value,
+                }),
+            });
+            const data = await response.json();
+            setError(data.message);
+            if (response.ok) {
+                navigation("/Main");
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <Container>
+            {loading && <Loader />}
             <div className={`${styles.loginPage} page-style`}>
                 <MainLogo />
+                {error && <p className={services.loginError}>The login-password combination is incorrect</p>}
                 <MainForm>
                     <Input
                         value={email.value}
@@ -70,12 +91,7 @@ const LoginPage = () => {
                         className={(password.isDirty && password.isEmpty) || (password.isDirty && password.minLength) ? services.invalid : ""}
                         cursor="pointer"
                     />
-                    <FormButton
-                        onClick={handleSubmit}
-                        disabled={!email.isValid || !password.isValid}
-                        buttonType="submit"
-                        className={styles.loginPage__formButton}
-                    >
+                    <FormButton onClick={onSubmit} disabled={!email.isValid || !password.isValid} buttonType="submit" className={styles.loginPage__formButton}>
                         Login
                     </FormButton>
                 </MainForm>

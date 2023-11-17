@@ -401,13 +401,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    transition: background-color 5000s ease-in-out 0s;
+    transition: background-color 10000s ease-in-out 0s;
     background-color: transparent !important;
-    color: var(--text-dark);
-}
-
-.prev-btn {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
+    color: var(--text-dark) !important;
 }
