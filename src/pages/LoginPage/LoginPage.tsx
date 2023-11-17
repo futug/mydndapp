@@ -6,7 +6,7 @@ import services from "../../ServiceClasses.module.scss";
 import Input from "../../components/Form/input/Input";
 import FormButton from "../../components/Form/Button/FormButton";
 import MainLogo from "../../components/MainLogo/MainLogo";
-import { GiVikingHelmet, GiEnergyShield } from "react-icons/gi";
+import { GiTiedScroll, GiEnergyShield } from "react-icons/gi";
 import MainForm from "../../components/Form/MainForm/MainForm";
 import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
 import useInput from "../../utilities/hooks/useInput/useInput";
@@ -68,7 +68,7 @@ const LoginPage = () => {
                                 ? email.errorMessages.isEmail
                                 : "Enter your email"
                         }
-                        iconComponent={<GiVikingHelmet />}
+                        iconComponent={<GiTiedScroll />}
                         className={(email.isDirty && email.isEmpty) || (email.isDirty && email.isEmail) ? services.invalid : ""}
                         cursor="pointer"
                     />

@@ -93,7 +93,7 @@ const RegisterPage = () => {
                                 ? username.errorMessages.minLength
                                 : "What's your name?"
                         }
-                        iconComponent={<GiTiedScroll />}
+                        iconComponent={<GiVikingHelmet />}
                         className={(username.isDirty && username.isEmpty) || (username.isDirty && username.minLength) ? services.invalid : ""}
                     />
                     <Input
@@ -111,7 +111,7 @@ const RegisterPage = () => {
                                 ? email.errorMessages.isEmail
                                 : "Enter your email"
                         }
-                        iconComponent={<GiVikingHelmet />}
+                        iconComponent={<GiTiedScroll />}
                         className={(email.isDirty && email.isEmpty) || (email.isDirty && email.isEmail) ? services.invalid : ""}
                     />
                     <Input
