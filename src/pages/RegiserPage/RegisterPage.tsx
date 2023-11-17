@@ -10,6 +10,7 @@ import { GiVikingHelmet, GiEnergyShield, GiTiedScroll } from "react-icons/gi";
 import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
 import useInput from "../../utilities/hooks/useInput/useInput";
 import Popup from "../../components/Popup/Popup";
+import Loader from "../../components/Loader/Loader";
 
 const RegisterPage = () => {
     const email = useInput("", { isEmail: true, isEmpty: true, minLength: 6 });
@@ -18,12 +19,14 @@ const RegisterPage = () => {
     const [succsessRegister, setSuccsessRegister] = useState(false);
     const [userEmail, setUserEmail] = useState("");
     const [occurredError, setOccurredError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const { passwordType, togglePassword } = usePasswordToggle();
 
     const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
+            setLoading(true);
             const response = await fetch("https://dndapi.ru:8000/api/register", {
                 method: "POST",
                 headers: {
@@ -48,15 +51,18 @@ const RegisterPage = () => {
             setUserEmail(data.user.email);
         } catch (error) {
             console.error("An error occurred:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <Container>
+            {loading && <Loader />}
             <Popup occurredError={occurredError} userEmail={userEmail} success={succsessRegister} setSuccess={setSuccsessRegister} />
             <div className={`${styles.registerPage} page-style`}>
                 <MainLogo />
-                <MainForm onSubmit={onSubmit}>
+                <MainForm>
                     <Input
                         value={username.value}
                         onChange={(e) => username.onChange(e)}
@@ -114,7 +120,8 @@ const RegisterPage = () => {
                     />
                     <FormButton
                         disabled={!username.isValid || !email.isValid || !password.isValid}
-                        buttonType="submit"
+                        buttonType="button"
+                        onClick={onSubmit}
                         className={styles.registerPage__formButton}
                     >
                         Register

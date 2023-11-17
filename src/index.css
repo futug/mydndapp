@@ -32,6 +32,7 @@ body {
     margin: 0;
     font-family: "Roboto", sans-serif;
     background-color: var(--primary-color);
+    transition: all 0.3s ease;
 }
 
 /**
@@ -365,13 +366,24 @@ template {
     display: none;
 }
 
-:root {
+:root[data-theme="light"] {
     --primary-color: #f3f2f5;
     --secondary-color: #1c9aef;
     --primary-accent: #e50513;
     --secondary-accent: #cf735b;
     --text-light: #f3f2f5;
     --text-dark: #2a2a2a;
+    --text-accent: #7c1911;
+    --valid-color: #018478;
+}
+
+:root[data-theme="dark"] {
+    --primary-color: #2a2a2a;
+    --secondary-color: #1c9aef;
+    --primary-accent: #b4030e;
+    --secondary-accent: #cf735b;
+    --text-light: #f3f2f5;
+    --text-dark: #f3f2f5;
     --text-accent: #7c1911;
     --valid-color: #018478;
 }
@@ -389,5 +401,5 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
     background-color: transparent !important;
-    color: #000 !important;
+    color: var(--text-dark);
 }

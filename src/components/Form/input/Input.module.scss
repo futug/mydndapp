@@ -6,6 +6,8 @@
     padding: 1rem;
     -webkit-tap-highlight-color: none;
     -webkit-auto-fill: none;
+    color: var(--text-dark);
+    transition: all 0.3s ease-in-out;
 
     &:focus + .inputPlaceholder,
     &:valid + .inputPlaceholder {
@@ -69,5 +71,5 @@
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     pointer-events: none;
-    transition: top 0.3s ease-in-out, background-color 0.4s ease-in-out, opacity 0.3s ease-in-out;
+    transition: top 0.3s ease-in-out, background-color 0.1s ease-in-out, opacity 0.3s ease-in-out;
 }
