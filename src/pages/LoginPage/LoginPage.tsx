@@ -1,5 +1,5 @@
 //Libs components
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GiTiedScroll, GiEnergyShield } from "react-icons/gi";
 //My components
@@ -15,45 +15,44 @@ import services from "../../ServiceClasses.module.scss";
 //Utilities & Custom hooks
 import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
 import useInput from "../../utilities/hooks/useInput/useInput";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store/store";
+import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
+import { loginUser } from "../../redux/actions/loginAction";
 
 const LoginPage = () => {
     const navigation = useNavigate();
     const { passwordType, togglePassword } = usePasswordToggle();
-    const [loading, setLoading] = useState(false);
-
+    const loginState = useSelector((state: RootState) => state.login);
     const [error, setError] = useState("");
     const email = useInput("", { isEmail: true, isEmpty: true, minLength: 6 });
     const password = useInput("", { isEmpty: true, minLength: 6 });
-
-    const onSubmit = async (event: React.FormEvent) => {
+    const dispatch = useDispatch();
+    const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        try {
-            setLoading(true);
-            const response = await fetch("https://dndapi.ru:8000/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: email.value,
-                    password: password.value,
-                }),
-            });
-            const data = await response.json();
-            setError(data.message);
-            if (response.ok) {
-                navigation("/Main");
-            }
-        } catch (error) {
-            console.error("An error occurred:", error);
-        } finally {
-            setLoading(false);
-        }
+        (dispatch as ThunkDispatch<RootState, void, AnyAction>)(
+            loginUser({
+                email: email.value,
+                password: password.value,
+            })
+        );
     };
+
+    useEffect(() => {
+        if (loginState.user) {
+            if (loginState.user.user.hasActivated) {
+                navigation("/Main");
+            } else {
+                navigation("/ActivateAccount");
+            }
+        } else if (loginState.error) {
+            setError(loginState.error);
+        }
+    }, [loginState, navigation]);
 
     return (
         <Container>
-            {loading && <Loader />}
+            {loginState.loading && <Loader />}
             <div className={`${styles.loginPage} page-style`}>
                 <MainLogo />
                 {error && <p className={services.loginError}>The login-password combination is incorrect</p>}

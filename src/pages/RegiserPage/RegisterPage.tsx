@@ -1,5 +1,5 @@
 //Libs components
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GiVikingHelmet, GiEnergyShield, GiTiedScroll } from "react-icons/gi";
 //My components
@@ -16,60 +16,52 @@ import services from "../../ServiceClasses.module.scss";
 //Utilities & Custom hooks
 import usePasswordToggle from "../../utilities/hooks/passwordTypeToggler/passwordTypeToggler";
 import useInput from "../../utilities/hooks/useInput/useInput";
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
+import { registerUser } from "../../redux/actions/registerAction";
+import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
 
 const RegisterPage = () => {
+    const dispatch = useDispatch();
+    const registrationState = useSelector((state: RootState) => state.register);
     const email = useInput("", { isEmail: true, isEmpty: true, minLength: 6 });
     const username = useInput("", { isEmpty: true, minLength: 3 });
     const password = useInput("", { isEmpty: true, minLength: 6, passwordTooEasy: true });
     const [succsessRegister, setSuccsessRegister] = useState(false);
     const [userEmail, setUserEmail] = useState("");
     const [occurredError, setOccurredError] = useState("");
-    const [loading, setLoading] = useState(false);
     const navigation = useNavigate();
 
     const { passwordType, togglePassword } = usePasswordToggle();
-
-    const onSubmit = async (event: React.FormEvent) => {
+    const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        try {
-            setLoading(true);
-            const response = await fetch("https://dndapi.ru:8000/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: email.value,
-                    username: username.value,
-                    password: password.value,
-                }),
-            });
 
-            setSuccsessRegister(true);
-            if (response.ok) {
-                setTimeout(() => {
-                    navigation("/Login");
-                }, 1200);
-            }
-            const data = await response.json();
-
-            if (!response.ok) {
-                setOccurredError(`Error ${response.status}: ${data.message}`);
-
-                return;
-            }
-
-            setUserEmail(data.user.email);
-        } catch (error) {
-            console.error("An error occurred:", error);
-        } finally {
-            setLoading(false);
-        }
+        (dispatch as ThunkDispatch<RootState, void, AnyAction>)(
+            registerUser({
+                email: email.value,
+                username: username.value,
+                password: password.value,
+            })
+        );
     };
+
+    useEffect(() => {
+        if (registrationState.user) {
+            const email = registrationState.user.user.email;
+            setTimeout(() => {
+                navigation("/Login");
+            }, 1200);
+            setUserEmail(email);
+            setSuccsessRegister(true);
+        } else if (registrationState.error) {
+            setOccurredError(`Error: ${registrationState.error}`);
+        }
+    }, [registrationState, navigation]);
 
     return (
         <Container>
-            {loading && <Loader />}
+            {registrationState.loading && <Loader />}
             <Popup
                 problem="Something went wrong"
                 successEntry="Almost there"
