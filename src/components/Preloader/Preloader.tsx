@@ -5,7 +5,7 @@ import sprite from "../../assets/spritesheet.png";
 interface PreloaderProps {}
 
 interface PreloaderObject {
-    c: CanvasRenderingContext2D | null;
+    ctx: CanvasRenderingContext2D | null;
     canvas: HTMLCanvasElement | null;
     sprite: HTMLImageElement | null;
     frame: number;
@@ -20,14 +20,14 @@ interface PreloaderObject {
 const Preloader: React.FC<PreloaderProps> = () => {
     useEffect(() => {
         const preloader: PreloaderObject = {
-            c: null,
+            ctx: null,
             canvas: null,
             sprite: null,
             frame: 0,
 
             init() {
                 this.canvas = document.querySelector("canvas");
-                this.c = this.canvas?.getContext("2d") || null;
+                this.ctx = this.canvas?.getContext("2d") || null;
                 if (this.canvas) {
                     this.canvas.width = 80;
                     this.canvas.height = 80;
@@ -44,11 +44,11 @@ const Preloader: React.FC<PreloaderProps> = () => {
             },
 
             render() {
-                this.c?.clearRect(0, 0, this.canvas?.width || 0, this.canvas?.height || 0);
+                this.ctx?.clearRect(0, 0, this.canvas?.width || 0, this.canvas?.height || 0);
                 this.sprite = new Image();
-                if (this.sprite && this.c) {
+                if (this.sprite && this.ctx) {
                     this.sprite.src = sprite;
-                    this.c.drawImage(this.sprite, this.frame * 64, 0, 63, 63, 0, 0, 63, 63);
+                    this.ctx.drawImage(this.sprite, this.frame * 64, 0, 63, 63, 0, 0, 63, 63);
                 }
             },
 

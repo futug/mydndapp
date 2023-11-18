@@ -9,7 +9,6 @@ import MainForm from "../../components/Form/MainForm/MainForm";
 import Input from "../../components/Form/input/Input";
 import FormButton from "../../components/Form/Button/FormButton";
 import Popup from "../../components/Popup/Popup";
-import Loader from "../../components/Loader/Loader";
 //Styles
 import styles from "./RegisterPage.module.scss";
 import services from "../../ServiceClasses.module.scss";
@@ -21,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { registerUser } from "../../redux/actions/registerAction";
 import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
+import Preloader from "../../components/Preloader/Preloader";
 
 const RegisterPage = () => {
     const dispatch = useDispatch();
@@ -55,13 +55,14 @@ const RegisterPage = () => {
             setUserEmail(email);
             setSuccsessRegister(true);
         } else if (registrationState.error) {
+            setSuccsessRegister(true);
             setOccurredError(`Error: ${registrationState.error}`);
         }
     }, [registrationState, navigation]);
 
     return (
         <Container>
-            {registrationState.loading && <Loader />}
+            {registrationState.loading && <Preloader />}
             <Popup
                 problem="Something went wrong"
                 successEntry="Almost there"

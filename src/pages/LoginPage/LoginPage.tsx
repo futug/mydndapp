@@ -8,7 +8,6 @@ import Input from "../../components/Form/input/Input";
 import FormButton from "../../components/Form/Button/FormButton";
 import MainLogo from "../../components/MainLogo/MainLogo";
 import Container from "../../components/Container/Container";
-import Loader from "../../components/Loader/Loader";
 //Styles
 import styles from "./LoginPage.module.scss";
 import services from "../../ServiceClasses.module.scss";
@@ -19,6 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
 import { loginUser } from "../../redux/actions/loginAction";
+import Preloader from "../../components/Preloader/Preloader";
 
 const LoginPage = () => {
     const navigation = useNavigate();
@@ -52,7 +52,7 @@ const LoginPage = () => {
 
     return (
         <Container>
-            {loginState.loading && <Loader />}
+            {loginState.loading && <Preloader />}
             <div className={`${styles.loginPage} page-style`}>
                 <MainLogo />
                 {error && <p className={services.loginError}>The login-password combination is incorrect</p>}
